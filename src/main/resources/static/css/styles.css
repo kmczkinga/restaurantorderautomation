@@ -1,0 +1,98 @@
+body {
+   background-color: #1a1a1a; /* Háttérszín */
+   color: #f5f5f5; /* Szöveg színe */
+   font-family: 'Georgia', serif; /* Szöveg font típusa */
+}
+
+.welcome-container {
+    margin-top: 10%; /* Felső margó mérete */
+    text-align: center; /* Szöveg igazítás */
+}
+
+.meal.container, .order.container {
+    text-align: center; /* Szöveg igazítás */
+}
+
+.h1 {
+    font-size: 3.5rem; /* Fontok mérete */
+    color: #f4c842; /* Szöveg színe */
+    margin-bottom: 20px; /* Alsó margó mérete */
+}
+
+.welcome-container p {
+    font-size: 1.2rem; /* Fontok mérete */
+    margin-bottom: 40px; /* Alsó margó mérete */
+}
+
+.welcome-container .mt-4 {
+    padding-top: 30px; /* Felső padding mérete */
+}
+
+.meal .mt-4, .order .mt-4 {
+    display: flex; /* Display típus beállítása */
+    justify-content: space-between; /* Széttolni a tartalmat a szélességben */
+    align-items: center; /* Vertikálisan középre helyezni a tartalmat */
+}
+
+.btn-gold {
+    background-color: #f4c842; /* Háttérszín */
+    color: #1a1a1a; /* Szöveg színe */
+    font-weight: bold; /* Font típusa */
+    border: none; /* Keret kikapcsolása */
+    padding: 12px 30px; /* Padding mérete felül-alul és bal-jobb oldalt */
+    border-radius: 50px; /* Keret kerekítése */
+    transition: all 0.3s ease; /* Animálás */
+}
+
+.btn-gold:hover {
+     background-color: #e0b636; /* Háttérszín */
+     color: #fff; /* Szöveg színe */
+}
+
+.meal-card {
+    background-color: #ffffff; /* Háttérszín */
+    border-radius: 15px; /* Keret lekerekítése */
+    overflow: hidden; /* Overflow beállítása */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Árnyék */
+    margin-bottom: 15px;  /* Alsó margó beállítása */
+}
+
+.meal-card img {
+    width: 100%; /* Szélesség */
+    height: 200px; /* Magasság */
+    object-fit: cover; /* Object-fit beállítása */
+}
+
+.meal-card .card-body {
+    text-align: center; /* Szöveg elhelyezés */
+    padding: 15px; /* Padding beállítása felül-alul-bal-jobb oldalt */
+}
+
+.meal-card h5 {
+    color: #1e3d58; /* Szöveg színe */
+    font-size: 22px; /* Font mérete */
+}
+
+.meal-card p {
+    color: #555555; /* Szöveg színe */
+    font-size: 18px; /* Font mérete */
+}
+
+.meal-card button {
+    background-color: #1e3d58; /* Háttérszín */
+    border-color: #1e3d58; /* Keret színe */
+    color: white; /* Szöveg színe */
+    padding: 8px 20px; /* Padding beállítása felül-alul és jobb-bal oldalt */
+    border-radius: 50px; /* Keret lekerekítése */
+    transition: all 0.3s ease; /* Animáció */
+}
+
+.meal-card button:hover {
+    background-color: #155a77; /* Háttérszín */
+}
+
+.meal-grid {
+    display: grid; /* Grid beállítása */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grid template beállítása */
+    gap: 20px; /* Távolság az elemek között */
+}
