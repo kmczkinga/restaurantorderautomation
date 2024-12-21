@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="order container mt-5">
+    <h1>Rendelés áttekintése</h1>
+    <div class="meal-grid">
+        <div class="meal-card" th:each="orderItem : ${foods}">
+            <img alt="Étel kép" th:src="@{${orderItem.food.image}}"/>
+            <div class="card-body">
+                <h5 th:text="${orderItem.food.name}"></h5>
+                <p th:text="${orderItem.food.price + ' Ft'}"></p>
+                <p>Mennyiség: <span th:text="${orderItem.quantity}"></span></p>
+                <form method="post" th:action="@{/remove-from-order}">
+                    <input name="foodId" th:value="${orderItem.food.id}" type="hidden"/>
+                    <button class="btn btn-danger w-100 mt-2" type="submit">Törlés a rendelésből</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="order-summary">
+        <h2>Összesen: <span th:text="${total + ' Ft'}"></span></h2>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-gold btn-lg mx-2" th:href="@{/dessert}">Vissza</a>
+        <a class="btn btn-gold btn-lg mx-2" th:href="@{/tables}">Asztalfoglalás</a>
+    </div>
+</div>
+</body>
+</html>

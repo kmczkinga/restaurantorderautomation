@@ -1,0 +1,51 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS food_allergic;
+DROP TABLE IF EXISTS allergic;
+DROP TABLE IF EXISTS food;
+DROP TABLE IF EXISTS tables;
+DROP TABLE IF EXISTS guest;
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE food (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    price INTEGER NOT NULL,
+    image VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE allergic (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE food_allergic (
+    food_id INTEGER NOT NULL,
+    allergic_id INTEGER NOT NULL,
+    PRIMARY KEY (food_id, allergic_id),
+    FOREIGN KEY (food_id) REFERENCES food (id) ON DELETE CASCADE,
+    FOREIGN KEY (allergic_id) REFERENCES allergic (id) ON DELETE CASCADE
+);
+
+CREATE TABLE tables (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    number_of_seats INTEGER NOT NULL
+);
+
+CREATE TABLE guest (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    number_of_guests INTEGER NOT NULL,
+    table_id INTEGER NOT NULL,
+    payment_method VARCHAR(255) NOT NULL,
+    FOREIGN KEY (table_id) REFERENCES tables (id)
+);
+
+CREATE TABLE orders (
+    guest_id INTEGER NOT NULL,
+    food_id INTEGER NOT NULL,
+    PRIMARY KEY (guest_id, food_id),
+    FOREIGN KEY (guest_id) REFERENCES guest (id) ON DELETE CASCADE,
+    FOREIGN KEY (food_id) REFERENCES food (id) ON DELETE CASCADE
+);
+
+SET FOREIGN_KEY_CHECKS = 1;
