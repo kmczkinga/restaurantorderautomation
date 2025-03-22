@@ -5,11 +5,22 @@ body {
 }
 
 .welcome-container {
-    margin-top: 10%; /* Felső margó mérete */
+    margin-top: 125px; /* Felső margó mérete */
     text-align: center; /* Szöveg igazítás */
 }
 
-.meal.container, .order.container {
+.welcome-background {
+    position: fixed; /* Pozíció típusa */
+    top: 0; /* Felülről eltolás */
+    left: 0; /* Bal oldalról */
+    width: 100%; /* Szélesség */
+    height: 100%; /* Magasság*/
+    background: url('/images/welcome.jpg') no-repeat center center fixed; /* Háttér */
+    background-size: 1000px 1000px; /* Háttér mérete */
+    z-index: -1; /* Z tengelyen való elhelyezkedése (háttérben van) */
+}
+
+.meal.container, .order.container, .table.container, .cook.container {
     text-align: center; /* Szöveg igazítás */
 }
 
@@ -19,19 +30,35 @@ body {
     margin-bottom: 20px; /* Alsó margó mérete */
 }
 
-.welcome-container p {
+.h2 {
+    font-size: 2.5rem; /* Fontok mérete */
+    color: #f4c842; /* Szöveg színe */
+}
+
+.welcome-container p, .payment-option span {
     font-size: 1.2rem; /* Fontok mérete */
     margin-bottom: 40px; /* Alsó margó mérete */
 }
+
 
 .welcome-container .mt-4 {
     padding-top: 30px; /* Felső padding mérete */
 }
 
-.meal .mt-4, .order .mt-4 {
+.welcome-container .mt-4.cook {
+    padding-top: 300px; /* Felső padding mérete */
+}
+
+.meal .mt-4, .order .mt-4, .table .mt-4, .cook .mt-4 {
     display: flex; /* Display típus beállítása */
     justify-content: space-between; /* Széttolni a tartalmat a szélességben */
     align-items: center; /* Vertikálisan középre helyezni a tartalmat */
+}
+
+.order.confirm .mt-4 {
+    display: unset; /* Megjelenítés típusa kikapcsolása */
+    position: relative; /* Pozíció típusa */
+    top: 35px; /* Felső eltolás */
 }
 
 .btn-gold {
@@ -49,7 +76,7 @@ body {
      color: #fff; /* Szöveg színe */
 }
 
-.meal-card {
+.meal-card, .table-card, .order-card {
     background-color: #ffffff; /* Háttérszín */
     border-radius: 15px; /* Keret lekerekítése */
     overflow: hidden; /* Overflow beállítása */
@@ -60,25 +87,51 @@ body {
 .meal-card img {
     width: 100%; /* Szélesség */
     height: 200px; /* Magasság */
-    object-fit: cover; /* Object-fit beállítása */
+    object-fit: scale-down; /* Object-fit beállítása */
 }
 
-.meal-card .card-body {
+.meal-card .card-body, .table-card .card-body {
     text-align: center; /* Szöveg elhelyezés */
     padding: 15px; /* Padding beállítása felül-alul-bal-jobb oldalt */
 }
 
-.meal-card h5 {
-    color: #1e3d58; /* Szöveg színe */
-    font-size: 22px; /* Font mérete */
+.order-card .card-body {
+    text-align: left; /* Szöveg elhelyezés */
+    padding: 15px; /* Padding beállítása felül-alul-bal-jobb oldalt */
 }
 
-.meal-card p {
+.meal-card h5, .table-card h5, .order-card h5 {
+    color: #1e3d58; /* Szöveg színe */
+    font-size: 22px; /* Font mérete */
+    min-height: 75px;
+    text-align: center;
+}
+
+.meal-card p, .table-card p, .order-card p, .order-card h4, .order-card li, .order-card h3 {
     color: #555555; /* Szöveg színe */
     font-size: 18px; /* Font mérete */
 }
 
-.meal-card button {
+.order-card ul li {
+    display: flex;
+    align-items: flex-start; /* Aligns the text properly */
+    gap: 5px; /* Ensures a 5px space between the bullet and text */
+
+}
+
+.order-card ul li::marker {
+    content: none; /* Lista alapértelmezett jelőlője kikapcsolása*/
+}
+
+.order-card ul li::before {
+    content: "•"; /* Saját lista jelölő */
+    color: black;/* Színe*/
+    font-size: 16px;/* Mérete*/
+    width: 10px; /* Jobbra való eltolása */
+    flex-shrink: 0; /* Kicsinyítés kikapcsolása */
+}
+
+.meal-card button, .table-card button, .order-card button {
     background-color: #1e3d58; /* Háttérszín */
     border-color: #1e3d58; /* Keret színe */
     color: white; /* Szöveg színe */
@@ -87,12 +140,71 @@ body {
     transition: all 0.3s ease; /* Animáció */
 }
 
-.meal-card button:hover {
+.meal-card button:hover, .table-card button:hover, .order-card button:hover {
     background-color: #155a77; /* Háttérszín */
 }
 
-.meal-grid {
+.meal-grid, .table-grid, .order-grid {
     display: grid; /* Grid beállítása */
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grid template beállítása */
     gap: 20px; /* Távolság az elemek között */
 }
+
+.allergic-container {
+   display: flex;/* Megjelenítés típusa*/
+   gap: 5px;/* Elemek közötti tér*/
+   align-items: center;/* Elemek igazítása*/
+   justify-content: center;/* Elemek igazítása*/
+   margin-top: 10px;/* Felső margó*/
+   height: 50px;/* Magasság*/
+}
+
+.allergic img {
+   width: 50px;/* Szélesség*/
+   height: 50px;/* Magasság*/
+}
+
+.payment-list {
+    margin: auto;/* Margó*/
+    width: fit-content; /* Szélesség*/
+}
+
+.payment-option {
+    display: flex; /* Megjelenítés típusa*/
+    align-items: center;/* Elemek elhelyezése*/
+    gap: 15px;/* Elemek közti space*/
+    background: white;/* Háttér*/
+    margin-bottom: 20px;/* Alső margó*/
+    padding: 10px;/* Padding*/
+    border-radius: 10px;/* Lekerekítés*/
+    width: 100%;/* Szélesség*/
+    max-width: 400px;/* Maximális szélesség*/
+    justify-content: flex-start;/* Elemek elhelyezése balra*/
+    position: relative;/* Pozíció típusa*/
+}
+
+.payment-option .payment-card {
+    position: inherit; /* Pozíció típisa öröklődik*/
+    width: 400px;/* Szélesség*/
+    text-align: left;/* Szöveg igazítása*/
+}
+
+.payment-option .payment-card .payment-radio {
+    position: inherit;/* Pozíció típisa öröklődik*/
+    transform: scale(1.5); /* Nagyítás*/
+    top: -20px;/* Felülről való eltolása*/
+}
+
+.payment-option .payment-card .payment-icon {
+    position: inherit; /* Pozíció típusa öröklődik*/
+    width: 60px; /* Szélesség */
+    height: 60px; /* Magasság*/
+}
+
+.payment-option .payment-card .payment-name {
+    position: inherit; /* Pozíció típusa öröklődik */
+    color: #1a1a1a; /* Szöveg színe */
+    top: -20px; /* Felülről eltolás*/
+}
+
+

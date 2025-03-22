@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Adatbázis kommunikációt biztosít a Food táblával
+ */
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
