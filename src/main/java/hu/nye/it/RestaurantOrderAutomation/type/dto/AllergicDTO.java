@@ -17,9 +17,11 @@ import lombok.NoArgsConstructor;
 public class AllergicDTO {
     private Integer id;
     private String name;
+    private String image;
 
     public AllergicDTO(final Allergic allergic) {
         this.id = allergic.getId();
         this.name = allergic.getName();
+        this.image = allergic.getImage();
     }
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rendelések</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="cook container mt-5">
+    <h1>Rendelések</h1>
+    <div th:if="${#lists.isEmpty(tables)}">
+        <h2>Jelenleg nincsen egy rendelés se.</h2>
+    </div>
+    <div class="order-grid">
+        <div class="order-card" th:each="order : ${orders}">
+            <div class="card-body">
+                <h3>Rendelés #<span th:text="${order.id}"></span></h3>
+                <p><strong>Fizetési mód:</strong> <span th:text="${order.paymentMethod}"></span></p>
+                <p><strong>Összeg:</strong> <span th:text="${order.total} + ' Ft'"></span></p>
+
+                <h4>Ételek:</h4>
+                <ul>
+                    <li th:each="foodItem : ${order.foods}"
+                        th:text="${foodItem.foodName} + ' (' + ${foodItem.quantity} + ' db)'"></li>
+                </ul>
+
+                <h4>Asztalok:</h4>
+                <ul>
+                    <li th:each="tableItem : ${order.tables}"
+                        th:text="'Asztal #' + ${tableItem.tableId}"></li>
+                </ul>
+                <h4 th:if="${order.prepared}">Elkészítve</h4>
+                <form method="post" th:action="@{/cook/set-prepared}" th:if="${!order.prepared}">
+                    <input name="orderId" th:value="${order.id}" type="hidden"/>
+                    <button class="btn btn-custom w-100" type="submit">Elkészítve</button>
+                </form>
+                <form method="post" th:action="@{/cook/delete}" th:if="${order.prepared}">
+                    <input name="orderId" th:value="${order.id}" type="hidden"/>
+                    <button class="btn btn-custom w-100" type="submit">Kifizetve, törlés</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-gold btn-lg" th:href="@{/}">Vissza</a>
+    </div>
+</div>
+</body>
+</html>

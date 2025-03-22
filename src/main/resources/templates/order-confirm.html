@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rendelés áttekintése</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+    <link href="/css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="order confirm container mt-5">
+    <h1>Köszönjük a rendelést!</h1>
+    <h2 th:text="'Az ön sorszáma: ' + ${orderId}"></h2>
+    <div class="mt-4">
+        <a class="btn btn-gold btn-lg mx-2" th:href="@{/}">Vissza a főolaldra</a>
+    </div>
+</div>
+</body>
+</html>

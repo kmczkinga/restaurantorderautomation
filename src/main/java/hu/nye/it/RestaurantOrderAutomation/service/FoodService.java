@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Ételekell kapcsolatos logikák.
+ */
 @Service
 @RequiredArgsConstructor
 public class FoodService {

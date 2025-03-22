@@ -19,11 +19,30 @@ import java.util.List;
 @Entity
 public class Food {
 
+    /**
+     * Elsődleges kulcs
+     */
     @Id
     private Integer id;
+
+    /**
+     * Étel neve
+     */
     private String name;
+
+    /**
+     * Étel típusa  (leves, főétel, desszert)
+     */
     private String type;
+
+    /**
+     * Étel ára
+     */
     private Integer price;
+
+    /**
+     * Étel képe
+     */
     private String image;
 
     /**

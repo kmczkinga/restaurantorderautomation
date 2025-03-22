@@ -3,29 +3,25 @@ package hu.nye.it.RestaurantOrderAutomation.controller;
 import hu.nye.it.RestaurantOrderAutomation.service.FoodService;
 import hu.nye.it.RestaurantOrderAutomation.service.OrderStore;
 import hu.nye.it.RestaurantOrderAutomation.type.dto.FoodDTO;
-import hu.nye.it.RestaurantOrderAutomation.type.model.Food;
+import hu.nye.it.RestaurantOrderAutomation.type.dto.OrderItemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * Az étel oldalak (leves, főétel, desszert) hívásai fogadásáért felelős.
+ */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/food")
 public class FoodController {
 
     private final FoodService foodService;
     private final OrderStore orderStore;
-
-    /**
-     * Üdvözlő oldal betöltése.
-     */
-    @GetMapping
-    public String welcome() {
-        return "welcome";
-    }
 
     /**
      * Leves oldal betöltése.
@@ -34,7 +30,7 @@ public class FoodController {
     @GetMapping("/soup")
     public String listSoups(Model model) {
         final List<FoodDTO> foods = foodService.findAllSoups().stream().map(FoodDTO::new).toList();
-        model.addAttribute("foods", foods);
+        model.addAttribute("foods", countQuantities(foods));
         return "soup";
     }
 
@@ -45,7 +41,7 @@ public class FoodController {
     @GetMapping("/main-meal")
     public String listMainMeals(Model model) {
         final List<FoodDTO> foods = foodService.findAllMainMeals().stream().map(FoodDTO::new).toList();
-        model.addAttribute("foods", foods);
+        model.addAttribute("foods", countQuantities(foods));
         return "main-meal";
     }
 
@@ -56,40 +52,26 @@ public class FoodController {
     @GetMapping("/dessert")
     public String listDesserts(Model model) {
         final List<FoodDTO> foods = foodService.findAllDesserts().stream().map(FoodDTO::new).toList();
-        model.addAttribute("foods", foods);
+        model.addAttribute("foods", countQuantities(foods));
         return "dessert";
     }
 
-    /**
-     * Rendelés áttekintése oldal betöltése.
-     * Az orderStore-ból betölti az összes ételt és az összesített árat.
-     */
-    @GetMapping("/order")
-    public String viewOrderStore(Model model) {
-        model.addAttribute("foods", orderStore.getFoods());
-        model.addAttribute("total", orderStore.getTotal());
-        return "order";
-    }
 
     /**
-     * A megadott foodId alapján hozzáadja az ételt a rendeléshez, vagyis az orderStore-hoz.
-     * Majd átírányít a megadott oldalra, jelen esetben marad az oldalon, ahol ezt meghívták.
+     * Megszámolja, hogy az adott ételekből hány db van egy rendelésben.
      */
-    @PostMapping("/add-to-order")
-    public String addToOrderStore(@RequestParam Integer foodId, @RequestHeader("referer") String referer) {
-        Food food = foodService.findById(foodId);
-        orderStore.addFood(new FoodDTO(food));
-        return "redirect:" + referer;
-    }
-
-    /**
-     * A megadott foodId alapján eltávolítja az ételt a rendelésből, vagyis az orderStore-ból.
-     * Majd átírányít a megadott oldalra, jelen esetben marad az oldalon, ahol ezt meghívták.
-     */
-    @PostMapping("/remove-from-order")
-    public String removeFromOrderStore(@RequestParam Integer foodId, @RequestHeader("referer") String referer) {
-        Food food = foodService.findById(foodId);
-        orderStore.removeFood(new FoodDTO(food));
-        return "redirect:" + referer;
+    private List<FoodDTO> countQuantities(final List<FoodDTO> foods) {
+        final List<OrderItemDTO> orders = orderStore.getFoods();
+        int quantity;
+        for (final FoodDTO food : foods) {
+            quantity = 0;
+            for (final OrderItemDTO order : orders) {
+                if (order.getFood().getId().equals(food.getId())) {
+                    quantity = order.getQuantity();
+                }
+            }
+            food.setQuantity(quantity);
+        }
+        return foods;
     }
 }

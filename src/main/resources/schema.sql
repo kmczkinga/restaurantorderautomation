@@ -3,7 +3,10 @@ DROP TABLE IF EXISTS food_allergic;
 DROP TABLE IF EXISTS allergic;
 DROP TABLE IF EXISTS food;
 DROP TABLE IF EXISTS tables;
+DROP TABLE IF EXISTS payment_method;
 DROP TABLE IF EXISTS guest;
+DROP TABLE IF EXISTS order_food;
+DROP TABLE IF EXISTS order_table;
 DROP TABLE IF EXISTS orders;
 
 CREATE TABLE food (
@@ -16,7 +19,8 @@ CREATE TABLE food (
 
 CREATE TABLE allergic (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    name VARCHAR(255) NOT NULL UNIQUE,
+    image VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE food_allergic (
@@ -29,23 +33,36 @@ CREATE TABLE food_allergic (
 
 CREATE TABLE tables (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    number_of_seats INTEGER NOT NULL
+    number_of_seats INTEGER NOT NULL,
+    occupied BOOLEAN NOT NULL
 );
 
-CREATE TABLE guest (
+CREATE TABLE payment_method (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    number_of_guests INTEGER NOT NULL,
-    table_id INTEGER NOT NULL,
-    payment_method VARCHAR(255) NOT NULL,
-    FOREIGN KEY (table_id) REFERENCES tables (id)
+    name VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE orders (
-    guest_id INTEGER NOT NULL,
-    food_id INTEGER NOT NULL,
-    PRIMARY KEY (guest_id, food_id),
-    FOREIGN KEY (guest_id) REFERENCES guest (id) ON DELETE CASCADE,
-    FOREIGN KEY (food_id) REFERENCES food (id) ON DELETE CASCADE
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    payment_method VARCHAR(255) NOT NULL,
+    total INTEGER NOT NULL,
+    prepared TINYINT(1) NOT NULL
+);
+
+CREATE TABLE order_food (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    order_id INTEGER NOT NULL,
+    food_name VARCHAR(255) NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
+);
+
+CREATE TABLE order_table (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    order_id INTEGER NOT NULL,
+    table_id INTEGER NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
 );
 
 SET FOREIGN_KEY_CHECKS = 1;
