@@ -131,6 +131,18 @@ body {
     flex-shrink: 0; /* Kicsinyítés kikapcsolása */
 }
 
+.order-card.success {
+    background-color: #28a745 !important; /* háttérszín */
+    color: white !important; /* szín */
+    transition: all 0.5s ease; /* animáció */
+}
+
+.order-card.fade-out {
+    opacity: 0; /* átláthatóság */
+    transform: scale(0.95); /* animáció */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* animáció */
+}
+
 .meal-card button, .table-card button, .order-card button {
     background-color: #1e3d58; /* Háttérszín */
     border-color: #1e3d58; /* Keret színe */
@@ -206,5 +218,8 @@ body {
     color: #1a1a1a; /* Szöveg színe */
     top: -20px; /* Felülről eltolás*/
 }
+
+
+
 
 
