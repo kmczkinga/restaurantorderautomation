@@ -9,7 +9,7 @@
 <body>
 <div class="cook container mt-5">
     <h1>Rendelések</h1>
-    <div th:if="${#lists.isEmpty(tables)}">
+    <div th:if="${#lists.isEmpty(orders)}">
         <h2>Jelenleg nincsen egy rendelés se.</h2>
     </div>
     <div class="order-grid">
@@ -35,7 +35,8 @@
                     <input name="orderId" th:value="${order.id}" type="hidden"/>
                     <button class="btn btn-custom w-100" type="submit">Elkészítve</button>
                 </form>
-                <form method="post" th:action="@{/cook/delete}" th:if="${order.prepared}">
+                <form method="post" onsubmit="handleDelete(event, this)" th:action="@{/cook/delete}"
+                      th:if="${order.prepared}">
                     <input name="orderId" th:value="${order.id}" type="hidden"/>
                     <button class="btn btn-custom w-100" type="submit">Kifizetve, törlés</button>
                 </form>
@@ -47,5 +48,21 @@
         <a class="btn btn-gold btn-lg" th:href="@{/}">Vissza</a>
     </div>
 </div>
+<script>
+    function handleDelete(event, form) {
+        event.preventDefault();
+
+        const card = form.closest('.order-card');
+        card.classList.add('success');
+
+        setTimeout(() => {
+            card.classList.add('fade-out');
+        }, 300);
+
+        setTimeout(() => {
+            form.submit();
+        }, 1000);
+    }
+</script>
 </body>
 </html>
